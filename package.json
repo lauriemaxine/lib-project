@@ -2,9 +2,12 @@
   "name": "lib-project",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
+  "main": "./libserver/index.js",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

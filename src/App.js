@@ -1,25 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import './reset.css';
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      currentStory: 'This is a little test!'
+    }
+  }
+
+
+  componentDIdMount(){
+    console.log("Component Mounted")
+    axios.get('http://localhost:3001/api/libs')
+      .then(res => this.setState({
+        currentStory: res.data
+      }))
+      .catch(error => console.log(error))
+  }
+
+  handleOnClick(){
+    console.log('Requesting Stories')
+    axios.get('http://localhost:3001/api/libs')
+      .then(res => this.setState({
+        currentStory: res.data
+      }))
+  }
+  
+  
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <nav></nav>
+        <section>
+          <div className="sidebar"></div>
+          <div className="story-block"></div>
+          <div className="sidebar"></div>
+        </section>
       </div>
     );
   }
