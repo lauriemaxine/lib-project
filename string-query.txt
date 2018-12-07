@@ -1,0 +1,19 @@
+Server:
+
+// query stuff
+app.get('/api/test', (req, res) => {
+  req.query.thing // 'wat'
+  if (req.query.thing) {
+    //do stuff with the query
+  } else {
+    // do basic stuff without query
+  }
+})
+
+
+Client:
+
+  // query stuff
+  example() {
+    axios.get(`/api/test?thing=wat`)
+  }
