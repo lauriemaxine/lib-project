@@ -10,7 +10,7 @@ class App extends Component {
     super(props)
     this.state = {
       currentStory: `Uhhh.... the, umm... it was uh... er... something about a... somebody?`,
-      words: []
+      words: [] ,
     }
     this.addWords = this.addWords.bind(this)
     this.resetWordsArray = this.resetWordsArray.bind(this)
@@ -19,7 +19,7 @@ class App extends Component {
 
   buildStory(){
     console.log("Building Story!")
-    axios.put('/api/libs' , ["rock" , "stomp" , "tired" , "JemBob"])
+    axios.put('/api/libs' , this.state.words)
       .then(res => {this.setState({
         currentStory: res.data
       })
@@ -34,7 +34,7 @@ class App extends Component {
     this.setState({
       words: addWord
     })
-    console.log(this.state.words)
+    console.log(addWord)
   }
 
   resetWordsArray(){

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import Prompt from './prompt';
 import Inputs from './inputs';
-import axios from 'axios';
 
 class StoryBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      words: ["ball" , "dog" , "JemmyDean" , "cowlicker"],
       prompts: ["I want to tell you a story, but I've forgotten some of the words!", "There was a noun, I remember...", "Oh, yeah, I think you're right! There was a verb too...", "Man, you're good! And an adjective?", "Uh... probably! And the name is on the tip of my tongue...", "That's amazing, that's four for four (most likely). Would you like to hear the story?", "PLACEHOLDER", "That was awesome! Would you like to go again?"],
       promptIndex: 0,
     }
@@ -17,9 +15,9 @@ class StoryBlock extends Component {
     this.promptText = this.promptText.bind(this)
   }
 
-  addWords(word){
+  addWords(word = ''){
     this.handlePromptIndex()
-    this.props.addWords(word)
+    !word ? console.log('No word added') : this.props.addWords(word);
   }
 
   
@@ -62,11 +60,12 @@ class StoryBlock extends Component {
           // promptText={this.state.prompts[this.state.promptIndex]}
           promptText={this.promptText}
           currentStory = {this.props.currentStory}
-        />
+          />
         <Inputs
           handlePromptIndex={this.handlePromptIndex}
           addWords={this.addWords}
           buildStory={this.props.buildStory}
+          index = {this.state.promptIndex}
           />
         <div>
           <button onClick={() => this.props.buildStory()}>Invoke Buildstory</button>
