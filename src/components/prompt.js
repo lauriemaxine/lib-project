@@ -9,8 +9,7 @@ class Prompt extends Component {
   render () {
     return (
       <div className="prompt-block">
-        {this.props.promptText}
-        
+        {this.props.promptText()}
       </div>
     )
   }

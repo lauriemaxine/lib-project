@@ -11,6 +11,8 @@ app.use(cors())
 
 app.get('/api/libs' , ctrlAlpha.readStory)
 
+app.put('/api/libs' , ctrlAlpha.buildStory)
+
 
 
 app.listen( port , () => console.log(`Talk cruddy to me on ${port}`))

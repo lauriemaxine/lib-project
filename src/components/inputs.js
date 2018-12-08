@@ -26,7 +26,7 @@ class Inputs extends Component {
       <button onClick={() => this.props.handlePromptIndex(true)}>Reset</button>
 
       
-      <button onClick={() => this.props.getStory()}>Magic Troubleshooting Button!</button>
+      <button onClick={() => this.props.buildStory()}>Invoke BuildStory</button>
       
       </div>
     )

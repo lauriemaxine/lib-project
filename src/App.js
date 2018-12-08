@@ -9,20 +9,39 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      currentStory: 'Once upon a blah blah blah...' ,
-      words: [] ,
+      currentStory: `Uhhh.... the, umm... it was uh... er... something about a... somebody?`,
+      words: []
     }
-
-    this.getStory = this.getStory.bind(this)
-    
+    this.addWords = this.addWords.bind(this)
+    this.resetWordsArray = this.resetWordsArray.bind(this)
+    this.buildStory = this.buildStory.bind(this)
   }
 
-  getStory(){
-    console.log('Get Story Invoked!')
-    axios.get('http://localhost:3001/api/libs')
-      .then(res => this.setState({
-        currentStory: res.data[1]
-      }))
+  buildStory(){
+    console.log("Building Story!")
+    axios.put('/api/libs' , ["rock" , "stomp" , "tired" , "JemBob"])
+      .then(res => {this.setState({
+        currentStory: res.data
+      })
+      console.log(res.data)
+    })
+  }
+
+  addWords(word) {
+    console.log(`addWords Invoked!`)
+    let addWord = [...this.state.words]
+    addWord.push(word)
+    this.setState({
+      words: addWord
+    })
+    console.log(this.state.words)
+  }
+
+  resetWordsArray(){
+    this.setState({
+      words: []
+    })
+    console.log("Words cleared.")
   }
   
   render() {
@@ -31,12 +50,15 @@ class App extends Component {
         <nav></nav>
         <section>
           <div className="sidebar">
-            <button onClick={() => console.log(this.state.currentStory)}>Magic Troubleshooting Button!</button>
+            <div>
+            </div>
           </div>
           <div className="story-block">
-            <StoryBlock 
-              story={this.state.currentStory}
-              getStory={this.getStory}
+            <StoryBlock
+              addWords={this.addWords}
+              buildStory={this.buildStory}
+              resetWordsArray={this.resetWordsArray}
+              currentStory={this.state.currentStory}
               />
           </div>
           <div className="sidebar"></div>
@@ -47,15 +69,3 @@ class App extends Component {
 }
 
 export default App;
-
-// componentDIdMount(){
-//   console.log("Component Mounted")
-//   axios.get('http://localhost:3001/api/libs')
-//     .then(res => setStoryCallback(res.data))
-//     .catch(error => console.log(error))
-// }
-
-// getStory(){
-//   console.log('Requesting Stories')
-//   axios.get('http://localhost:3001/api/libs')
-// }
