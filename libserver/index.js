@@ -11,8 +11,12 @@ app.use(cors())
 
 app.get('/api/libs' , ctrlAlpha.readStory)
 
+app.get('/api/libs/:title' , ctrlAlpha.readSaved)
+
 app.put('/api/libs' , ctrlAlpha.buildStory)
 
+app.delete('/api/libs' , (req, res) => {req.query.delTarget ? ctrlAlpha.deleteSaved(req,res) : ctrlAlpha.deleteChambered(req, res)})
 
+app.post('/api/libs/:title' , ctrlAlpha.saveStory)
 
 app.listen( port , () => console.log(`Talk cruddy to me on ${port}`))

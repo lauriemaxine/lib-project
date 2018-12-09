@@ -6,6 +6,9 @@ class Inputs extends Component {
     this.state = {
       inputValue: "",
     }
+
+    this.handleSaveStory = this.handleSaveStory.bind(this)
+    
   }
 
   // componentDidMount(){
@@ -16,7 +19,7 @@ class Inputs extends Component {
 
   handleOnChange(input){
     this.setState({
-      inputValue: input
+      inputValue: input 
     })
   }
 
@@ -28,19 +31,38 @@ class Inputs extends Component {
     })
   }
 
-  handleRender(next, field, reset, build){
+  handleRender(next, field, reset, build, save, saveField, clear, deleteField, deleteButton){
     let {index} = this.props
     console.log(index)
-    if (index === 0 || index === 6 || index === 7){
+    if (index === 0 || index === 6 || index === 8){
       return <>{next}{reset}</>
     } else if (index === 5) {
       return <>{build}{reset}</>
+    } else if (index === 7) {
+      return <>{saveField}{save}{clear}</>
+    } else if (index === 9) {
+      return <>{deleteField}{deleteButton}{reset}</>
     } else {
       return  <>{field}{next}{reset}</>
     }
   }
 
-  
+  handleSaveStory(title){
+    this.setState({
+      inputValue: ''
+    })
+    this.props.saveStory(title)
+    this.props.addWords()
+  }
+
+  handleClearStory(){
+    this.props.clearStory()
+    this.props.addWords()
+  }
+
+  handleDeleteStory(title){
+    this.props.clearStory(title)
+  }
 
   
  
@@ -57,15 +79,28 @@ class Inputs extends Component {
     let nextButton = <button onClick={() => {this.handleOnClick()}}>Next</button>;
     let buildButton = <button onClick={() => {this.handleOnClick(true)}}>Next</button>;
     let field = <input value={this.state.inputValue} 
-    onChange={e => this.handleOnChange(e.target.value)}
-    onKeyPress={e => e.charCode === 13 ? this.handleOnClick() : null}  />
-    let reset = <button onClick={() => this.props.handlePromptIndex(true)}>Reset</button>
+      onChange={e => this.handleOnChange(e.target.value)}
+      onKeyPress={e => e.charCode === 13 ? this.handleOnClick() : null}  />
+    let saveField = <input value={this.state.inputValue} 
+      onChange={e => this.handleOnChange(e.target.value)}
+      onKeyPress={e => e.charCode === 13 ? this.handleSaveStory(this.state.inputValue) : null}  />
+    let deleteField = <input value={this.state.inputValue} 
+      onChange={e => this.handleOnChange(e.target.value)}
+      onKeyPress={e => e.charCode === 13 ? this.handleDeleteStory(this.state.inputValue) : null}  />
+    let deleteButton = <button onClick={() => this.handleDeleteStory(this.state.inputValue)}>Delete</button>
+    let reset = <button onClick={() => this.props.handlePromptIndex('reset')}>Reset</button>
+    let save = <button onClick={() => this.handleSaveStory(this.state.inputValue)}>Save</button>
+    let clear = <button onClick={() => this.handleClearStory()}>Nah, I'm Good</button>
     // ***End User Inputs*** //
 
 
       return(
     <div className="inputs-block">
-      {this.handleRender(nextButton, field, reset, buildButton)}
+      <input value={this.state.inputValue} 
+        onChange={e => this.handleOnChange(e.target.value)}
+        onKeyPress={e => e.charCode === 13 ? this.props.viewStory(this.state.inputValue) : null}  />
+      <button onClick={() => this.props.viewStory(this.state.inputValue)}>Search for Story</button>
+      {this.handleRender(nextButton, field, reset, buildButton, save, saveField, clear, deleteField, deleteButton)}
     </div>
     )
   }

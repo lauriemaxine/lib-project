@@ -1,18 +1,12 @@
-import React, { Component } from 'react';
-
-class Prompt extends Component {
-  constructor(props){
-    super(props)
-  }
+import React from 'react';
   
-  
-  render () {
-    return (
-      <div className="prompt-block">
-        {this.props.promptText()}
-      </div>
-    )
-  }
+function Prompt (props) {
+  return (
+    <div className="prompt-block">
+      {props.promptText()}
+    </div>
+  )
 }
+
     
 export default Prompt
