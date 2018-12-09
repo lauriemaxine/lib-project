@@ -4,7 +4,6 @@ import './reset.css';
 import './App.css';
 import './prompt.css';
 import StoryBlock from './components/story-block'
-import ListTitles from './components/titlesList';
 
 class App extends Component {
   constructor(props){
@@ -78,13 +77,11 @@ class App extends Component {
     
     return (
       <div className="App">
-        <nav></nav>
+        <nav>
+          <h1>The Forgetful Storyteller</h1>
+        </nav>
         <section>
-          <div className="sidebar">
-            <button onClick={() => this.deleteStory()}>invoke deleteStory</button>
-            <button onClick={() => this.saveStory("Crumpets")}>invoke saveStory</button>
-          </div>
-          <div className="story-block">
+          
             <StoryBlock
               addWords={this.addWords}
               buildStory={this.buildStory}
@@ -94,13 +91,7 @@ class App extends Component {
               clearStory={this.deleteStory}
               titles={this.state.titles}
               />
-          </div>
-          <div className="sidebar">
-            <ListTitles
-              titles = {this.state.titles}
 
-            />
-          </div>
         </section>
       </div>
     );

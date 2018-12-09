@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Prompt from './prompt';
 import Inputs from './inputs';
 import axios from 'axios'
+import ListTitles from './titlesList'
 
 class StoryBlock extends Component {
   constructor(props) {
@@ -27,13 +28,12 @@ class StoryBlock extends Component {
   }
 
   viewStoryCont(res){
+    console.log('viewStory Continued')
     let {text} = res.data
     let newPrompts = this.state.prompts.slice(0, this.state.prompts.length - 1)
     this.setState({ prompts: newPrompts})
     newPrompts.push(text)
-    console.log(text)
     this.handlePromptIndex('view')
-    console.log(res) 
     }
   
 
@@ -44,9 +44,10 @@ class StoryBlock extends Component {
 
   
   handlePromptIndex(special) {
+    console.log('HPI active, special parameter = '+special)
     let { prompts, promptIndex } = this.state
-    if (special === 'reset' || promptIndex === prompts.length - 1) {
-      console.log('Resetting!')
+    if (special === 'reset' || promptIndex === prompts.length - 2) {
+      console.log('Resetting')
       this.props.resetWordsArray()
       this.setState({
         promptIndex: 0,
@@ -58,6 +59,7 @@ class StoryBlock extends Component {
       this.setState({
         promptIndex: prompts.length - 1
       })
+      console.log('HPI: PromptIndex should be 10 and is ' + this.state.promptIndex )
     }
     else {
       let increment = promptIndex + 1
@@ -65,7 +67,7 @@ class StoryBlock extends Component {
         promptIndex: increment,
         prompts: prompts
       })
-      console.log(increment)
+      console.log('Iterator is now ' + increment)
     }
   }
 
@@ -85,6 +87,9 @@ class StoryBlock extends Component {
   
   render() {
     return (
+      <>
+      <div className="sidebar">
+          </div>
       <div className="story-block">
         <Prompt
           // promptText={this.state.prompts[this.state.promptIndex]}
@@ -100,7 +105,15 @@ class StoryBlock extends Component {
           clearStory = {this.props.clearStory}
           viewStory = {this.viewStory}
           />
-      </div>)
+      </div>
+      <div className="sidebar">
+        <ListTitles
+          titles={this.props.titles}
+          viewStory={this.viewStory}
+        />
+      </div>
+      </>
+    )
   }
 }
 

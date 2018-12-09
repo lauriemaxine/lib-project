@@ -33,7 +33,7 @@ class Inputs extends Component {
 
   handleRender(next, field, reset, build, save, saveField, clear, deleteField, deleteButton){
     let {index} = this.props
-    console.log(index)
+    console.log('handleRender is now on ' + index)
     if (index === 0 || index === 6 || index === 8){
       return <>{next}{reset}</>
     } else if (index === 5) {

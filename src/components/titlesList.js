@@ -1,7 +1,7 @@
 import React from 'react'
 
 function ListTitles(props){
-  let titlesList = props.titles.map((title, i) => <p key={i}>{title}</p>)
+  let titlesList = props.titles.map((title, i) => <li key={i} onClick={() => props.viewStory(title)} >{title}</li>)
 
   return (
     <>
