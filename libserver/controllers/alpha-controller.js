@@ -7,17 +7,7 @@ const skeletons = [
     storyBones: [['I once saw a man walking along with a huge '] , 20 , [' in his hand. Now, I was feeling pretty darn '] , 40 , ' on that particular day, so I said, "hey ' , 41 , 21 , ', what are you doing with that big ' , 42 , 20 , '?" Well, he put the ' , 20 , ' down, looked me right in the eyes, and said, "If I had a dollar for every time somebody asked me that, I\'d be a ' , 22 , ' by now." I felt pretty ' , 43 , ' after that, so I didn\'t hang around. I got right back on my ' , 23 , ' and got outta there. And that\'s the only time I ever met a professional ' , 24 , ' ' , 30 , 'er.']
   } , {
     title: "The Lion and the Mouse" , 
-    storyBones: [['A Lion lay asleep in the '],20,[', his '],40,[' head resting on his paws. A '],41,[' little Mouse came upon him unexpectedly, and in her fright and haste to get away, ran across the Lion\'s '],21,['. Roused from his nap, the Lion laid his '],42,[' paw angrily on the tiny creature to '],30,[' her.']
-
-    ['"'],31,[' me!" begged the poor Mouse. "Please let me go and some day I will surely '],32,[' you."' ,
-    
-    'The Lion was much amused to think that a Mouse could ever help him. But he was '],43,[' and finally let the Mouse go.' ,
-    
-    'Some days later, while '],33,['ing his '],22,[' in the '],20,[', the Lion was caught in the toils of a '],34,['er\'s '],23,['. Unable to '],24,[' himself, he filled the '],20,[' with his '],44,[' '],35,['ing. The Mouse knew the voice and quickly found the Lion '],36,['ing in the '],23,['. Running to one of the great '],25,['s that bound him, she gnawed it until it parted, and soon the Lion was '],45,['.\ ' ,
-    
-    '"You laughed when I said I would '],32,[' you," said the Mouse. "Now you see that even a Mouse can '],37,[' a Lion."' ,
-    
-    'A '],26,[' is never wasted.']]
+    storyBones: [['A Lion lay asleep in the '],20,[', his '],40,[' head resting on his paws. A '],41,[' little Mouse came upon him unexpectedly, and in her fright and haste to get away, ran across the Lion\'s '],21,['. Roused from his nap, the Lion laid his '],42,[' paw angrily on the tiny creature to '],30,[' her. "'],31,[' me!" begged the poor Mouse. "Please let me go and some day I will surely '],32,[' you." The Lion was much amused to think that a Mouse could ever '],32,[' him. But he was '],43,[' and finally let the Mouse go. Some days later, while '],33,['ing his '],22,[' in the '],20,[', the Lion was caught in the toils of a '],34,['er`s '],23,['. Unable to '],24,[' himself, he filled the '],20,[' with his '],44,[' '],35,['ing. The Mouse knew the voice and quickly found the Lion '],36,['ing in the '],23,['. Running to one of the great '],25,['s that bound him, she gnawed it until it parted, and soon the Lion was '],45,['. "You laughed when I said I would '],32,[' you," said the Mouse. "Now you see that even a Mouse can '],37,[' a Lion."   Moral; A '],26,[' is never wasted.']]
   }
 ]
 

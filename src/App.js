@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import './reset.css';
 import './App.css';
 import './prompt.css';
@@ -16,7 +16,7 @@ class App extends Component {
     this.addWords = this.addWords.bind(this)
     // this.buildStory = this.buildStory.bind(this)
     // this.saveStory = this.saveStory.bind(this)
-    this.deleteStory = this.deleteStory.bind(this)
+    // this.deleteStory = this.deleteStory.bind(this)
   }
 
   // componentDidMount(){

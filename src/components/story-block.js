@@ -19,6 +19,7 @@ class StoryBlock extends Component {
       adjectiveArray: [40,41] ,
       storyFlesh: '' ,
       titles: [] ,
+      viewTitle: '' ,
     }
 
     this.handlePromptIndex = this.handlePromptIndex.bind(this)
@@ -29,11 +30,20 @@ class StoryBlock extends Component {
     this.fetchBones = this.fetchBones.bind(this)
     this.buildStory = this.buildStory.bind(this)
     this.saveStory = this.saveStory.bind(this)
+    this.editTitle = this.editTitle.bind(this)
+    this.clearStory = this.clearStory.bind(this)
   }
 
-  clearStory(name){
+  editTitle(newTitle){
+    console.log("ET: invoked")
+    axios.put('/api/editTitle' , { newTitle: newTitle , title: this.state.viewTitle})
+    .then((res) => this.setState({titles: res.data}) )
+    this.viewStory(newTitle)
+  }
+
+  clearStory(){
     console.log('clearStory invoked')
-    axios.delete(`/api/libs/${name}`)
+    axios.delete(`/api/libs/${this.state.viewTitle}`)
     .then(res => this.setState({
       titles: res.data
     }))
@@ -104,9 +114,9 @@ class StoryBlock extends Component {
 
   viewStoryCont(res){
     console.log('viewStory Continued')
-    let {text} = res.data
+    let {text, title} = res.data
     let newPrompts = this.state.prompts.slice(0, this.state.prompts.length - 1)
-    this.setState({ prompts: newPrompts})
+    this.setState({ prompts: newPrompts, viewTitle: title})
     newPrompts.push(text)
     this.handlePromptIndex('view')
     }
@@ -191,6 +201,7 @@ class StoryBlock extends Component {
           adjectiveArray = {this.state.adjectiveArray}
           pushToArray = {this.pushToArray}
           fetchBones = {this.fetchBones}
+          editTitle = {this.editTitle}
           />
       </div>
       <div className="sidebar">
