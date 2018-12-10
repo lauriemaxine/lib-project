@@ -11,52 +11,39 @@ class App extends Component {
     this.state = {
       currentStory: `Uhhh.... the, umm... it was uh... er... something about a... somebody?`,
       words: [] ,
-      titles: [] ,
+      // titles: [] ,
     }
     this.addWords = this.addWords.bind(this)
-    this.resetWordsArray = this.resetWordsArray.bind(this)
-    this.buildStory = this.buildStory.bind(this)
-    this.saveStory = this.saveStory.bind(this)
+    // this.buildStory = this.buildStory.bind(this)
+    // this.saveStory = this.saveStory.bind(this)
     this.deleteStory = this.deleteStory.bind(this)
   }
 
-  componentDidMount(){
-    axios.post(`/api/libs/titles`)
-      .then(res => this.setState({titles: res.data }))
-  }
+  // componentDidMount(){
+  //   axios.post(`/api/libs/titles`)
+  //     .then(res => this.setState({titles: res.data }))
+  // }
 
-  buildStory(){
-    console.log("Building Story!")
-    axios.put('/api/libs' , this.state.words)
-      .then(res => {this.setState({
-        currentStory: res.data
-      })
-      console.log(res.data)
-    })
-  }
-
-  saveStory(title){
-    let param = encodeURI(title)
-    axios.post(`/api/libs/${param}`)
-      .then(res => this.setState({
-        titles: res.data
-      })
-      )
-  }
-
-  deleteStory(name = null){
-    console.log('deleteStory invoked')
-    if (name === null){
-      axios.delete('/api/libs')
-    } else {
-      axios.delete(`/api/libs?delTarget=${name}`)
-        .then(res => this.setState({
-          titles: res.data
-        }))
-    }
-  }
-
-  addWords(word) {
+  
+  // saveStory(title){
+  //   let param = encodeURI(title)
+  //   axios.post(`/api/libs/${param}`)
+  //   .then(res => this.setState({
+  //     titles: res.data
+  //   })
+  //     )
+  //   }
+    
+    // deleteStory(name){
+    //   console.log('deleteStory invoked')
+    //   axios.delete(`/api/libs/${name}`)
+    //   .then(res => this.setState({
+    //       titles: res.data
+    //     }))
+    //   }
+    
+    
+    addWords(word) {
     console.log(`addWords Invoked!`)
     let addWord = [...this.state.words]
     addWord.push(word)
@@ -64,13 +51,6 @@ class App extends Component {
       words: addWord
     })
     console.log(addWord)
-  }
-
-  resetWordsArray(){
-    this.setState({
-      words: []
-    })
-    console.log("Words cleared.")
   }
   
   render() {
@@ -84,12 +64,11 @@ class App extends Component {
           
             <StoryBlock
               addWords={this.addWords}
-              buildStory={this.buildStory}
               resetWordsArray={this.resetWordsArray}
               currentStory={this.state.currentStory}
-              saveStory={this.saveStory}
-              clearStory={this.deleteStory}
-              titles={this.state.titles}
+              // saveStory={this.saveStory}
+              // clearStory={this.deleteStory}
+              // appTitles={this.state.titles}
               />
 
         </section>
@@ -99,3 +78,14 @@ class App extends Component {
 }
 
 export default App;
+
+
+  // buildStory(){
+  //   console.log("Building Story!")
+  //   axios.put('/api/libs' , this.state.words)
+  //     .then(res => {this.setState({
+  //       currentStory: res.data
+  //     })
+  //     console.log(res.data)
+  //   })
+  // }

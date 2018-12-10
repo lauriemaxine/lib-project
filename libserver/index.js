@@ -9,14 +9,18 @@ const port = 3001;
 app.use(bodyParser.json());
 app.use(cors())
 
-app.get('/api/libs' , ctrlAlpha.readStory)
+app.get('/api/libs' , ctrlAlpha.getSkellies)
 
-app.get('/api/libs/:title' , ctrlAlpha.readSaved)
+app.get('/api/libs/titles' , ctrlAlpha.sendList)
 
-app.put('/api/libs' , ctrlAlpha.buildStory)
+app.get('/api/libs/search/:title' , ctrlAlpha.readSaved)
 
-app.delete('/api/libs' , (req, res) => {req.query.delTarget ? ctrlAlpha.deleteSaved(req,res) : ctrlAlpha.deleteChambered(req, res)})
+// app.put('/api/libs' , ctrlAlpha.buildStory)
 
-app.post('/api/libs/:title' , ctrlAlpha.saveStory)
+app.delete('/api/libs/:delTarget' , ctrlAlpha.deleteSaved)
+
+app.post('/api/libs/' , ctrlAlpha.saveStory)
+
+app.put('/api/editTitle' , ctrlAlpha.editTitle)
 
 app.listen( port , () => console.log(`Talk cruddy to me on ${port}`))

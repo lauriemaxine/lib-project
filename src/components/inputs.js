@@ -4,11 +4,26 @@ class Inputs extends Component {
   constructor(props){
     super(props)
     this.state = {
-      inputValue: "",
+      wordsArray: [],
+      inputValue: '',
     }
 
     this.handleSaveStory = this.handleSaveStory.bind(this)
-    
+    this.handleRender = this.handleRender.bind(this)
+  }
+
+  prePush(){
+    this.props.pushToArray(this.state.wordsArray)
+    this.setState({ wordsArray: []})
+  }
+
+  handleOnBlur(val,i){
+    let newArray = this.state.wordsArray.splice(i,1,val)
+    console.log('HOB:' + newArray)
+    this.setState({
+      wordsArray: this.state.wordsArray
+    })
+    console.log('HOB:' + this.state.wordsArray)
   }
 
   // componentDidMount(){
@@ -31,19 +46,27 @@ class Inputs extends Component {
     })
   }
 
-  handleRender(next, field, reset, build, save, saveField, clear, deleteField, deleteButton){
+  handleRender(next, field, reset, build, save, saveField, clear, deleteField, deleteButton,newArrayButton,start){
     let {index} = this.props
+    let target = []
+    if(index===4){target = this.props.nameArray.slice()}
+    if(index===1){target = this.props.nounArray.slice()}
+    if(index===2){target = this.props.verbArray.slice()}
+    if(index===3){target = this.props.adjectiveArray.slice()}
+    let wordFields = target.map((e, index) => <input key={index} onBlur={e => this.handleOnBlur(e.target.value,index)} />)
     console.log('handleRender is now on ' + index)
-    if (index === 0 || index === 6 || index === 8){
+    if (index === 6 || index === 8){
       return <>{next}{reset}</>
-    } else if (index === 5) {
-      return <>{build}{reset}</>
     } else if (index === 7) {
       return <>{saveField}{save}{clear}</>
     } else if (index === 9) {
       return <>{deleteField}{deleteButton}{reset}</>
+    } else if (index === 0){
+      return <>{start}</>
+    } else if (index === 5){
+      return <>{build}{reset}</>
     } else {
-      return  <>{field}{next}{reset}</>
+      return  <>{wordFields}{newArrayButton}{reset}</>
     }
   }
 
@@ -63,12 +86,16 @@ class Inputs extends Component {
   handleDeleteStory(title){
     this.props.clearStory(title)
   }
-
-  
- 
   
   
   
+  
+  // Below is the SEARCH FUNCTIONALITY. It works, but doesn't have a place yet. //
+  
+  // <input value={this.state.inputValue} 
+  //   onChange={e => this.handleOnChange(e.target.value)}
+  //   onKeyPress={e => e.charCode === 13 ? this.props.viewStory(this.state.inputValue) : null}  />
+  // <button onClick={() => this.props.viewStory(this.state.inputValue)}>Search for Story</button>
   
   
   // <button onClick={() => this.props.buildStory()}>Invoke BuildStory</button>
@@ -76,8 +103,10 @@ class Inputs extends Component {
   render(){
 
     // ***User Inputs*** //
+    let startButton = <button onClick={() => this.props.fetchBones()}>START!</button>
+    let newArrayButton = <button onClick={() => {this.prePush()}}>Submit Words</button>;
     let nextButton = <button onClick={() => {this.handleOnClick()}}>Next</button>;
-    let buildButton = <button onClick={() => {this.handleOnClick(true)}}>Next</button>;
+    let buildButton = <button onClick={() => {this.handleOnClick(true)}}>Build</button>;
     let field = <input value={this.state.inputValue} 
       onChange={e => this.handleOnChange(e.target.value)}
       onKeyPress={e => e.charCode === 13 ? this.handleOnClick() : null}  />
@@ -96,11 +125,7 @@ class Inputs extends Component {
 
       return(
     <div className="inputs-block">
-      <input value={this.state.inputValue} 
-        onChange={e => this.handleOnChange(e.target.value)}
-        onKeyPress={e => e.charCode === 13 ? this.props.viewStory(this.state.inputValue) : null}  />
-      <button onClick={() => this.props.viewStory(this.state.inputValue)}>Search for Story</button>
-      {this.handleRender(nextButton, field, reset, buildButton, save, saveField, clear, deleteField, deleteButton)}
+      {this.handleRender(nextButton, field, reset, buildButton, save, saveField, clear, deleteField, deleteButton,newArrayButton,startButton)}
     </div>
     )
   }
