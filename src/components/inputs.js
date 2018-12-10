@@ -12,13 +12,14 @@ class Inputs extends Component {
 
     this.handleSaveStory = this.handleSaveStory.bind(this)
     this.handleRender = this.handleRender.bind(this)
-    this.handleTestInput = this.handleTestInput.bind(this)
+    this.handleOnBlur = this.handleOnBlur.bind(this)
+    
   }
 
   handleTestInput(value,index){
     let {wordsArray} = this.state
-    this.state = this.state.wordsArray.splice(index,1,value)
-    this.setState({wordsArray: wordsArray})
+    let newWordsArray = this.state.wordsArray.splice(index,1,value)
+    this.setState({wordsArray: newWordsArray})
     console.log(wordsArray)
   }
 
@@ -28,6 +29,7 @@ class Inputs extends Component {
   }
 
   prePush(){
+    console.log(`prePush: invoked`)
     this.props.pushToArray(this.state.wordsArray)
     this.setState({ wordsArray: []})
   }
@@ -68,7 +70,7 @@ class Inputs extends Component {
     if(index===1){target = this.props.nounArray.slice()}
     if(index===2){target = this.props.verbArray.slice()}
     if(index===3){target = this.props.adjectiveArray.slice()}
-    let wordFields = target.map((e, index) => <WordField testInput={this.handleTestInput} code={e} key={index} inputIndex={index} valueLocation={this.state.wordsArray[index]} />)
+    let wordFields = target.map((e, index) => <WordField handleOnBlur={this.handleOnBlur} code={e} key={index} inputIndex={index} valueLocation={this.state.wordsArray[index]} />)
     console.log('handleRender is now on ' + index)
     if (index === 6 || index === 8){
       return <>{next}{reset}</>

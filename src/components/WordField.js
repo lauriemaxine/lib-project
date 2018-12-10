@@ -12,7 +12,7 @@ class WordField extends Component{
     return(
       <div>
         <input
-          onBlur={e => this.props.testInput(e.target.value, this.props.inputIndex)}
+          onBlur={e => this.props.handleOnBlur(e.target.value, this.props.inputIndex)}
           placeholder={this.props.code}
           onChange={e => this.setState({input: e.target.value})}
          />

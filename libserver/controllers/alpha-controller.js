@@ -27,8 +27,17 @@ module.exports = {
   } ,
 
   getSkellies(req, res) {
-    console.log('readStory invoked!')
+    console.log(`getSkellies invoked on ${req.query.name}`)
+    if(req.query.name === 'titles'){
+      console.log(`GS:` + req.query.name)
+      res.status(200).send(skeletons.map(skellyOb => skellyOb.title))
+    } else if (typeof req.query.name === 'string' && req.query.name !== 'undefined'){
+      console.log(`GS: op2 on` + req.query.name)
+      res.status(200).send(skeletons.filter(skellyOb => skellyOb.title === req.query.name)[0])
+    } else {
+      console.log('GS: sending default')
     res.status(200).send(skeletons[2])
+    }
   } ,
 
   // buildStory(req, res){

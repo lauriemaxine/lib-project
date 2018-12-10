@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Prompt from './prompt';
 import Inputs from './inputs';
 import axios from 'axios'
-import ListTitles from './titlesList'
+import ListTitle from './ListTitle'
 import skeletonParser from '../utlilities/skeletonParser'
 import storyBuilder from '../utlilities/storyBuilder'
 
@@ -19,6 +19,7 @@ class StoryBlock extends Component {
       adjectiveArray: [40,41] ,
       storyFlesh: '' ,
       titles: [] ,
+      skellyTitles: [],
       viewTitle: '' ,
     }
 
@@ -32,6 +33,7 @@ class StoryBlock extends Component {
     this.saveStory = this.saveStory.bind(this)
     this.editTitle = this.editTitle.bind(this)
     this.clearStory = this.clearStory.bind(this)
+    this.playStory = this.playStory.bind(this)
   }
 
   editTitle(newTitle){
@@ -60,9 +62,9 @@ class StoryBlock extends Component {
     })
   }
 
-  fetchBones(){
-    console.log('FB: invoked')
-    axios.get('/api/libs')
+  fetchBones(title){
+    console.log('FB: invoked on ' + title)
+    axios.get(`/api/libs?name=${title}`)
       .then(res => {this.setState ({
         currentSkeleton: res.data
         })
@@ -87,10 +89,10 @@ class StoryBlock extends Component {
   resetWordArrays(){
     console.log('RWA: resetting arrays')
     this.setState({
-      nameArray: ['name' , 'name' , 'name' , 'name'] ,
-      nounArray: ['noun'] ,
-      verbArray: ['verb' , 'verb'] ,
-      adjectiveArray: ['addy' , 'addy' , 'addy' ] ,
+      nameArray: ['no array!'] ,
+      nounArray: ['no array!'] ,
+      verbArray: ['no array!'] ,
+      adjectiveArray: ['no array!'] ,
     })
   }
 
@@ -129,10 +131,10 @@ class StoryBlock extends Component {
 
   
   handlePromptIndex(special) {
-    console.log('HPI active, special parameter = '+special)
+    console.log('HPI: invoked with parameter: '+special)
     let { prompts, promptIndex } = this.state
     if (special === 'reset' || promptIndex === prompts.length - 2 ) {
-      console.log('Resetting')
+      console.log('HPI: Resetting')
       this.resetWordArrays()
       this.setState({
         promptIndex: 0,
@@ -172,14 +174,24 @@ class StoryBlock extends Component {
   componentDidMount(){
     axios.get('/api/libs/titles')
     .then(res => this.setState({ titles: res.data }))
+    axios.get('/api/libs?name=titles')
+    .then(res => this.setState({skellyTitles: res.data}))
   }
 
+  playStory(title){
+    console.log(`PS: invoked on "${title}"`)
+    this.handlePromptIndex('reset')
+    this.fetchBones(title)
+  }
   
   render() {
+    let savedTitles = this.state.titles.map((title, i) => <ListTitle key={i} title={title} handleOnClick={this.viewStory} buttonText={'Edit'} />)
+    let storyList = this.state.skellyTitles.map((title, i) => <ListTitle key={i} title={title} handleOnClick={this.playStory} buttonText={'Play'} />)
     return (
       <>
       <div className="sidebar">
-          </div>
+        {storyList}
+      </div>
       <div className="story-block">
         <Prompt
           // promptText={this.state.prompts[this.state.promptIndex]}
@@ -205,10 +217,7 @@ class StoryBlock extends Component {
           />
       </div>
       <div className="sidebar">
-        <ListTitles
-          titles={this.state.titles}
-          viewStory={this.viewStory}
-        />
+        {savedTitles}
       </div>
       </>
     )
