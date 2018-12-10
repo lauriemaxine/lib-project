@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import WordField from '../components/WordField'
 
 class Inputs extends Component {
   constructor(props){
@@ -6,10 +7,19 @@ class Inputs extends Component {
     this.state = {
       wordsArray: [],
       inputValue: '',
+      testInput: '',
     }
 
     this.handleSaveStory = this.handleSaveStory.bind(this)
     this.handleRender = this.handleRender.bind(this)
+    this.handleTestInput = this.handleTestInput.bind(this)
+  }
+
+  handleTestInput(value,index){
+    let {wordsArray} = this.state
+    this.state = this.state.wordsArray.splice(index,1,value)
+    this.setState({wordsArray: wordsArray})
+    console.log(wordsArray)
   }
 
   handleEdit(newTitle){
@@ -58,7 +68,7 @@ class Inputs extends Component {
     if(index===1){target = this.props.nounArray.slice()}
     if(index===2){target = this.props.verbArray.slice()}
     if(index===3){target = this.props.adjectiveArray.slice()}
-    let wordFields = target.map((e, index) => <input key={index} onBlur={e => this.handleOnBlur(e.target.value,index)} />)
+    let wordFields = target.map((e, index) => <WordField testInput={this.handleTestInput} code={e} key={index} inputIndex={index} valueLocation={this.state.wordsArray[index]} />)
     console.log('handleRender is now on ' + index)
     if (index === 6 || index === 8){
       return <>{next}{reset}</>
