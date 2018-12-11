@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import WordField from '../components/WordField'
-import nameGenerator from '../utlilities/nameGenerator';
 import axios from 'axios'
 
 class Inputs extends Component {
