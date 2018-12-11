@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import WordField from '../components/WordField'
+import nameGenerator from '../utlilities/nameGenerator';
+import axios from 'axios'
 
 class Inputs extends Component {
   constructor(props){
@@ -13,7 +15,18 @@ class Inputs extends Component {
     this.handleSaveStory = this.handleSaveStory.bind(this)
     this.handleRender = this.handleRender.bind(this)
     this.handleOnBlur = this.handleOnBlur.bind(this)
+    this.handleRando = this.handleRando.bind(this)
     
+  }
+
+  handleRando(rando){
+    this.setState({inputValue: rando})
+  }
+
+  nameGenerator(cb){
+  
+    return axios.get("https://acedev-project-name-generator-v1.p.rapidapi.com/without-number" ,
+    {headers: {"X-RapidAPI-Key": "7d171a7c5cmsha9e755031a8c254p15cf15jsnffb30839217c"}}).then((res) => cb(res.data.spaced))
   }
 
   handleTestInput(value,index){
@@ -63,7 +76,7 @@ class Inputs extends Component {
     })
   }
 
-  handleRender(next, field, reset, build, save, saveField, clear, deleteField, deleteButton,newArrayButton,start,edit){
+  handleRender(next, field, reset, build, save, saveField, clear, deleteField, deleteButton,newArrayButton,start,edit,lazy){
     let {index} = this.props
     let target = []
     if(index===4){target = this.props.nameArray.slice()}
@@ -77,7 +90,7 @@ class Inputs extends Component {
     } else if (index === 10){
       return <><div>{field}{edit}</div><div>{deleteButton}</div><div>{reset}</div></>
     } else if (index === 7) {
-      return <>{saveField}{save}{clear}</>
+      return <>{saveField}{lazy}{save}</>
     // } else if (index === 9) {
     //   return <>{deleteButton}{reset}</>
     } else if (index === 0){
@@ -122,6 +135,7 @@ class Inputs extends Component {
   render(){
 
     // ***User Inputs*** //
+    let randoButton = <button onClick={() => this.nameGenerator(this.handleRando)}>Lazy Generate</button>
     let editTitleButton = <button onClick={() => this.handleEdit(this.state.inputValue)}>Edit Title</button>
     let startButton = <button onClick={() => this.props.fetchBones()}>START!</button>
     let newArrayButton = <button onClick={() => {this.prePush()}}>Submit Words</button>;
@@ -132,7 +146,8 @@ class Inputs extends Component {
       onKeyPress={e => e.charCode === 13 ? this.handleEdit(this.state.inputValue) : null}  />
     let saveField = <input value={this.state.inputValue} 
       onChange={e => this.handleOnChange(e.target.value)}
-      onKeyPress={e => e.charCode === 13 ? this.handleSaveStory(this.state.inputValue) : null}  />
+      onKeyPress={e => e.charCode === 13 ? this.handleSaveStory(this.state.inputValue) : null}
+      value={this.state.inputValue}  />
     let deleteField = <input value={this.state.inputValue} 
       onChange={e => this.handleOnChange(e.target.value)}
       onKeyPress={e => e.charCode === 13 ? this.handleDeleteStory(this.state.inputValue) : null}  />
@@ -145,7 +160,7 @@ class Inputs extends Component {
 
       return(
     <div className="inputs-block">
-      {this.handleRender(nextButton, editField, reset, buildButton, save, saveField, clear, deleteField, deleteButton,newArrayButton,startButton,editTitleButton)}
+      {this.handleRender(nextButton, editField, reset, buildButton, save, saveField, clear, deleteField, deleteButton,newArrayButton,startButton,editTitleButton, randoButton)}
     </div>
     )
   }
